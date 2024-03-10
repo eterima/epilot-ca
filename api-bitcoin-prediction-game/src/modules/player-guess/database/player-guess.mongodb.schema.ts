@@ -4,7 +4,6 @@ import { User } from 'src/modules/user/database/mongodb/user.mongodb.schema';
 export interface PlayerGuess {
   guess: number;
   completed: boolean;
-  scheduledAt: Date;
   playerId: Schema.Types.ObjectId;
   player?: User;
   createdAt?: Date;
@@ -17,7 +16,6 @@ const playerGuessSchema = new Schema<PlayerGuess>(
   {
     guess: { type: Number, required: true },
     completed: { type: Boolean, default: false },
-    scheduledAt: { type: Date },
     playerId: {
       type: Schema.Types.ObjectId,
       ref: 'User',

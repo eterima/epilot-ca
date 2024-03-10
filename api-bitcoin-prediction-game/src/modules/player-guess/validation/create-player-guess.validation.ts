@@ -7,7 +7,4 @@ export class CreatePlayerGuessValidation {
   // 0 - Down, 1 - Up
   @IsIn([0, 1])
   guess: number;
-
-  @IsDateString()
-  scheduledAt: string;
 }

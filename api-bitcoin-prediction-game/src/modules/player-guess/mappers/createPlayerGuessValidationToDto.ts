@@ -8,7 +8,6 @@ export const createPlayerGuessValidationToDto = (
   playerId: string,
 ): CreatePlayerGuessDTO => ({
   playerId,
-  scheduledAt: validation.scheduledAt,
   guess: mapGuessInputToEnum(validation.guess),
 });
 

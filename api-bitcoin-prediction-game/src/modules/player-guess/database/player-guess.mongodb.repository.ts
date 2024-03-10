@@ -27,14 +27,12 @@ export class PlayerGuessMongoDBRepositoryImplementation
       this.logger.log('Creating player guess', createPlayerGuessInput);
       const newPlayerGuess = new this.playerGuessModel({
         guess: createPlayerGuessInput.guess,
-        scheduledAt: createPlayerGuessInput.scheduledAt,
         playerId: createPlayerGuessInput.playerId,
       });
 
       const savedPlayerGuess = await newPlayerGuess.save();
       const playerGuess: PlayerGuess = {
         id: savedPlayerGuess._id,
-        scheduledAt: savedPlayerGuess.scheduledAt,
         guess: savedPlayerGuess.guess,
         playerId: String(savedPlayerGuess.playerId),
         completed: savedPlayerGuess.completed,

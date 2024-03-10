@@ -9,7 +9,6 @@ export interface PlayerGuess {
   id: string;
   guess: Guess;
   completed: boolean;
-  scheduledAt: Date;
   playerId: string;
   player?: User;
   createdAt?: Date;
