@@ -29,17 +29,19 @@ export class PlayerGuessService {
         createPlayerGuessDto.guess === Guess.UP;
 
       const score = isGuessCorrect ? 'increment_by_1' : 'decrement_by_1';
-      // TODO - Do this with promise all
-      await this.userService.updateAllTimeScore(
-        score,
-        createPlayerGuessDto.playerId,
-      );
 
-      const playerGuess = await this.playerGuessRepo.createPlayerGuess({
-        ...createPlayerGuessDto,
-        btcValueAfter,
-        isWin: isGuessCorrect,
-      });
+      const [_, playerGuess] = await Promise.all([
+        this.userService.updateAllTimeScore(
+          score,
+          createPlayerGuessDto.playerId,
+        ),
+        this.playerGuessRepo.createPlayerGuess({
+          ...createPlayerGuessDto,
+          btcValueAfter,
+          isWin: isGuessCorrect,
+        }),
+      ]);
+
       return playerGuess;
     } catch (error) {
       throw error;
