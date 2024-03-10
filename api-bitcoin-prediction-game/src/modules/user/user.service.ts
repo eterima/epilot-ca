@@ -53,6 +53,20 @@ export class UserService {
     return this.userRepo.findUserById(id);
   }
 
+  async updateAllTimeScore(
+    allTimeScore: 'increment_by_1' | 'decrement_by_1',
+    playerId: string,
+  ) {
+    const user = await this.getUserById(playerId);
+
+    const newAllTimeScore =
+      allTimeScore === 'decrement_by_1'
+        ? user.allTimeScore--
+        : user.allTimeScore++;
+
+    return this.userRepo.updateAllTimeScore(newAllTimeScore, playerId);
+  }
+
   private async hashPassword(password: string) {
     return bcrypt.hash(password, 10);
   }

@@ -2,6 +2,7 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { UserRepository } from '../../user.repository';
 import { CreateUserDTO } from '../../dtos/create-user.dto';
@@ -30,6 +31,7 @@ export class UserMongoDBRepositoryImplementation implements UserRepository {
       const user: User = {
         id: savedUser.id,
         email: savedUser.email,
+        allTimeScore: savedUser.allTimeScore,
       };
 
       this.logger.log('User created', createUserInput);
@@ -50,6 +52,7 @@ export class UserMongoDBRepositoryImplementation implements UserRepository {
         id: dbUser.id,
         email: dbUser.email,
         password: dbUser.password,
+        allTimeScore: dbUser.allTimeScore,
       };
 
       this.logger.log('User by email found', { email, id: dbUser.id });
@@ -70,6 +73,7 @@ export class UserMongoDBRepositoryImplementation implements UserRepository {
       const user: User = {
         id: dbUser.id,
         email: dbUser.email,
+        allTimeScore: dbUser.allTimeScore,
       };
 
       this.logger.log('User by id found', { id, user });
@@ -77,6 +81,38 @@ export class UserMongoDBRepositoryImplementation implements UserRepository {
       return user;
     } catch (error) {
       this.logger.error(SOMETHING_WENT_WRONG, error, { id });
+      throw new InternalServerErrorException(SOMETHING_WENT_WRONG);
+    }
+  }
+
+  async updateAllTimeScore(
+    newAllTimeScore: number,
+    playerId: string,
+  ): Promise<User> {
+    try {
+      const updatedUser = await this.userModel.findOneAndUpdate(
+        { _id: playerId },
+        { allTimeScore: newAllTimeScore },
+        { new: true },
+      );
+
+      const user: User = {
+        id: updatedUser.id,
+        email: updatedUser.email,
+        allTimeScore: updatedUser.allTimeScore,
+      };
+
+      this.logger.log('User by id found', { newAllTimeScore, playerId, user });
+
+      return user;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      this.logger.error(SOMETHING_WENT_WRONG, error, {
+        newAllTimeScore,
+        playerId,
+      });
       throw new InternalServerErrorException(SOMETHING_WENT_WRONG);
     }
   }
