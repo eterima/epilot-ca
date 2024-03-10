@@ -8,4 +8,7 @@ export type AppConfig = {
 
   // JWT
   JWT_SECRET: string;
+
+  // GBX
+  'X-RapidAPI-Key': string;
 };
