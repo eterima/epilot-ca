@@ -9,6 +9,7 @@ export const createPlayerGuessValidationToDto = (
 ): CreatePlayerGuessDTO => ({
   playerId,
   guess: mapGuessInputToEnum(validation.guess),
+  btcValue: validation.btcValue,
 });
 
 const mapGuessInputToEnum = (guessInput: number): Guess => {

@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsIn, IsDateString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsIn } from 'class-validator';
 
 export class CreatePlayerGuessValidation {
   @IsNotEmpty()
@@ -7,4 +7,8 @@ export class CreatePlayerGuessValidation {
   // 0 - Down, 1 - Up
   @IsIn([0, 1])
   guess: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  btcValue: number;
 }

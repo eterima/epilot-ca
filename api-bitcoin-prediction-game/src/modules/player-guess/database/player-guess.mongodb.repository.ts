@@ -28,6 +28,8 @@ export class PlayerGuessMongoDBRepositoryImplementation
       const newPlayerGuess = new this.playerGuessModel({
         guess: createPlayerGuessInput.guess,
         playerId: createPlayerGuessInput.playerId,
+        btcValue: createPlayerGuessInput.btcValue,
+        btcValueAfter: createPlayerGuessInput.btcValueAfter,
       });
 
       const savedPlayerGuess = await newPlayerGuess.save();
