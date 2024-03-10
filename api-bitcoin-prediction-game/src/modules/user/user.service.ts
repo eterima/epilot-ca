@@ -70,7 +70,11 @@ export class UserService {
       playerId,
       newAllTimeScore,
     });
-    return this.userRepo.updateAllTimeScore(newAllTimeScore, playerId);
+    return this.userRepo.updateAllTimeScore(
+      // Making sure it never goes lower than 0
+      Math.max(newAllTimeScore, 0),
+      playerId,
+    );
   }
 
   private async hashPassword(password: string) {
