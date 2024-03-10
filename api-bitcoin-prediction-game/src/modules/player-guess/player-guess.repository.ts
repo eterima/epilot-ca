@@ -1,8 +1,8 @@
-// import { CreateUserDTO } from './dtos/create-user.dto';
-// import { User, UserWithPassword } from './user.interface';
+import { CreatePlayerGuessDTO } from './dtos/create-player-guess.dto';
+import { PlayerGuess } from './player-guess.interface';
 
-// export interface UserRepository {
-//   createUser(createUserInput: CreateUserDTO): Promise<User>;
-//   findUserByEmail(email: string): Promise<UserWithPassword>;
-//   findUserById(id: string): Promise<User>;
-// }
+export interface PlayerGuessRepository {
+  createPlayerGuess(
+    createPlayerGuessInput: CreatePlayerGuessDTO,
+  ): Promise<PlayerGuess>;
+}
