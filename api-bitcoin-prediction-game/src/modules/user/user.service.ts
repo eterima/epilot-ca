@@ -62,8 +62,8 @@ export class UserService {
 
     const newAllTimeScore =
       allTimeScore === 'decrement_by_1'
-        ? user.allTimeScore--
-        : user.allTimeScore++;
+        ? user.allTimeScore - 1
+        : user.allTimeScore + 1;
 
     this.logger.log('New all time score to be set', {
       allTimeScore,
