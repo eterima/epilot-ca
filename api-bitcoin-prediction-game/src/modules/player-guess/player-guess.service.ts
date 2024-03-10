@@ -35,14 +35,10 @@ export class PlayerGuessService {
         createPlayerGuessDto.playerId,
       );
 
-      console.log('AMKO', {
-        ...createPlayerGuessDto,
-        btcValueAfter,
-      });
-
       const playerGuess = await this.playerGuessRepo.createPlayerGuess({
         ...createPlayerGuessDto,
         btcValueAfter,
+        isWin: isGuessCorrect,
       });
       return playerGuess;
     } catch (error) {

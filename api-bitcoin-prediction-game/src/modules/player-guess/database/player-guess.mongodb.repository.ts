@@ -30,6 +30,7 @@ export class PlayerGuessMongoDBRepositoryImplementation
         playerId: createPlayerGuessInput.playerId,
         btcValue: createPlayerGuessInput.btcValue,
         btcValueAfter: createPlayerGuessInput.btcValueAfter,
+        isWin: createPlayerGuessInput.isWin,
       });
 
       const savedPlayerGuess = await newPlayerGuess.save();
@@ -37,7 +38,9 @@ export class PlayerGuessMongoDBRepositoryImplementation
         id: savedPlayerGuess._id,
         guess: savedPlayerGuess.guess,
         playerId: String(savedPlayerGuess.playerId),
-        completed: savedPlayerGuess.completed,
+        isWin: savedPlayerGuess.isWin,
+        btcValue: savedPlayerGuess.btcValue,
+        btcValueAfter: savedPlayerGuess.btcValueAfter,
       };
 
       this.logger.log('Player Guess created', createPlayerGuessInput);

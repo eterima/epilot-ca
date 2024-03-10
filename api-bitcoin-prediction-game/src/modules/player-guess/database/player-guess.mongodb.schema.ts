@@ -3,7 +3,7 @@ import { User } from 'src/modules/user/database/mongodb/user.mongodb.schema';
 
 export interface PlayerGuess {
   guess: number;
-  completed: boolean;
+  isWin: boolean;
   playerId: Schema.Types.ObjectId;
   btcValue: number;
   btcValueAfter: number;
@@ -21,7 +21,7 @@ const playerGuessSchema = new Schema<PlayerGuess>(
     btcValue: { type: Number, required: true },
     // Value after guess
     btcValueAfter: { type: Number, required: true },
-    completed: { type: Boolean, default: false },
+    isWin: { type: Boolean, default: false },
     playerId: {
       type: Schema.Types.ObjectId,
       ref: 'User',

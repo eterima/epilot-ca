@@ -5,4 +5,5 @@ export class CreatePlayerGuessDTO {
   playerId: string;
   btcValue: number;
   btcValueAfter?: number;
+  isWin?: boolean;
 }

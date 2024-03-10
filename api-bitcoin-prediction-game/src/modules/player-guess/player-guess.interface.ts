@@ -8,8 +8,10 @@ export enum Guess {
 export interface PlayerGuess {
   id: string;
   guess: Guess;
-  completed: boolean;
+  isWin: boolean;
   playerId: string;
+  btcValue: number;
+  btcValueAfter: number;
   player?: User;
   createdAt?: Date;
   updatedAt?: Date;
