@@ -57,6 +57,7 @@ export class UserService {
     allTimeScore: 'increment_by_1' | 'decrement_by_1',
     playerId: string,
   ) {
+    this.logger.log('Updating all time score', { allTimeScore, playerId });
     const user = await this.getUserById(playerId);
 
     const newAllTimeScore =
@@ -64,6 +65,11 @@ export class UserService {
         ? user.allTimeScore--
         : user.allTimeScore++;
 
+    this.logger.log('New all time score to be set', {
+      allTimeScore,
+      playerId,
+      newAllTimeScore,
+    });
     return this.userRepo.updateAllTimeScore(newAllTimeScore, playerId);
   }
 
