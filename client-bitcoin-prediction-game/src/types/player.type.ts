@@ -5,5 +5,5 @@ export type Player = {
 };
 
 export type JWTToken = {
-  access_token: string;
+  accessToken: string;
 };

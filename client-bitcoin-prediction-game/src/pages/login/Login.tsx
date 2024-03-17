@@ -20,7 +20,9 @@ export const Login = () => {
 
   const handleLogin = async () => {
     try {
-      await playerService.loginPlayer(loginForm);
+      const { accessToken } = await playerService.loginPlayer(loginForm);
+      localStorage.setItem("accessToken", accessToken);
+      //   TODO Add refresh token
       navigate("/");
     } catch (error) {
       if (error instanceof AxiosError) {

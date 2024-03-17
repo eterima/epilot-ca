@@ -45,7 +45,7 @@ export class AuthService {
 
       const payload = { id: existingUser.id, email: existingUser.email };
 
-      const token = { access_token: await this.jwtService.signAsync(payload) };
+      const token = { accessToken: await this.jwtService.signAsync(payload) };
 
       this.logger.log('Token successfully created', { email: loginDTO.email });
 

@@ -2,28 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Register } from "./pages/register/Register";
-import { Login } from "./pages/login/Login";
+import { RouterProvider } from "react-router-dom";
+import { customRouter } from "./router";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
 );
 
-const router = createBrowserRouter([
-  {
-    path: "/register",
-    Component: Register,
-  },
-  {
-    path: "/login",
-    Component: Login,
-  },
-]);
-
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <RouterProvider router={customRouter} />
   </React.StrictMode>,
 );
 
