@@ -5,9 +5,9 @@ import { playerService } from "../../services/player.service";
 import { InputWithValidation } from "../../components/InputWithValidation/InputWithValidation";
 import { AxiosError } from "axios";
 
-export const Register = () => {
+export const Login = () => {
   const navigate = useNavigate();
-  const [registerForm, setRegisterForm] = useState<{
+  const [loginForm, setLoginForm] = useState<{
     email: string;
     password: string;
   }>({ email: "", password: "" });
@@ -18,10 +18,10 @@ export const Register = () => {
 
   const [genericError, setGenericError] = useState("");
 
-  const handleRegister = async () => {
+  const handleLogin = async () => {
     try {
-      await playerService.createUser(registerForm);
-      navigate("/login");
+      await playerService.loginPlayer(loginForm);
+      navigate("/");
     } catch (error) {
       if (error instanceof AxiosError) {
         if (Array.isArray(error.response?.data.message)) {
@@ -34,7 +34,7 @@ export const Register = () => {
   };
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRegisterForm((prevState) => ({
+    setLoginForm((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
@@ -49,7 +49,7 @@ export const Register = () => {
   return (
     <>
       <div className="container h-100 center-h-and-v">
-        <h3>Register</h3>
+        <h3>Log in</h3>
         <InputWithValidation
           type="email"
           name="email"
@@ -72,7 +72,7 @@ export const Register = () => {
           label="Password"
           onChange={handleChange}
         />
-        <Button onClick={handleRegister}>Submit</Button>
+        <Button onClick={handleLogin}>Submit</Button>
         {genericError && <p className="text-danger">{genericError}</p>}
       </div>
     </>

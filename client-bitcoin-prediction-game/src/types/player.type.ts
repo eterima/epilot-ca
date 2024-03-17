@@ -3,3 +3,7 @@ export type Player = {
   email: string;
   allTimeScore: number;
 };
+
+export type JWTToken = {
+  access_token: string;
+};
