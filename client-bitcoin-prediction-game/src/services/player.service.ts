@@ -22,6 +22,11 @@ export class PlayerService {
     });
     return response.data;
   }
+
+  async getSelf(): Promise<Player> {
+    const response = await this.httpService.get<Player>("/users/self");
+    return response.data;
+  }
 }
 
 export const playerService = new PlayerService(httpService);
