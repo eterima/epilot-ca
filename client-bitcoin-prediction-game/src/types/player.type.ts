@@ -7,3 +7,9 @@ export type Player = {
 export type JWTToken = {
   accessToken: string;
 };
+
+export type GuessDetails = {
+  guess: number;
+  btcCurrentValue: number;
+  sendRequestAt: Date;
+};
