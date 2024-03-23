@@ -7,6 +7,7 @@ type Props = {
   name: string;
   type: string;
   isInvalid: boolean;
+  value: string | number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -16,6 +17,7 @@ export const InputWithValidation = ({
   name,
   isInvalid,
   errorMessage,
+  value,
   onChange,
 }: Props) => {
   return (
@@ -26,6 +28,7 @@ export const InputWithValidation = ({
         type={type}
         name={name}
         placeholder={label}
+        value={value}
       />
       <Form.Control.Feedback type="invalid">
         {errorMessage}

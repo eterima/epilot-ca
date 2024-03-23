@@ -25,9 +25,7 @@ export const Login = () => {
       localStorage.setItem("accessToken", accessToken);
 
       if (accessToken) {
-        httpService.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${accessToken}`;
+        httpService.defaults.headers["Authorization"] = `Bearer ${accessToken}`;
 
         navigate("/");
       }
@@ -68,6 +66,7 @@ export const Login = () => {
           isInvalid={!!validationErrors.find((err) => err.property === "email")}
           label="Email"
           onChange={handleChange}
+          value={loginForm.email}
         />
         <InputWithValidation
           type="password"
@@ -80,6 +79,7 @@ export const Login = () => {
           }
           label="Password"
           onChange={handleChange}
+          value={loginForm.password}
         />
         <Button onClick={handleLogin}>Submit</Button>
         {genericError && <p className="text-danger">{genericError}</p>}

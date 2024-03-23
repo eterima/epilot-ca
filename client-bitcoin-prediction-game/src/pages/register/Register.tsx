@@ -59,6 +59,7 @@ export const Register = () => {
           isInvalid={!!validationErrors.find((err) => err.property === "email")}
           label="Email"
           onChange={handleChange}
+          value={registerForm.email}
         />
         <InputWithValidation
           type="password"
@@ -71,6 +72,7 @@ export const Register = () => {
           }
           label="Password"
           onChange={handleChange}
+          value={registerForm.password}
         />
         <Button onClick={handleRegister}>Submit</Button>
         {genericError && <p className="text-danger">{genericError}</p>}
