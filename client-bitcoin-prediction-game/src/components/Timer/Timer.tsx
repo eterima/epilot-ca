@@ -9,7 +9,7 @@ type Props = {
 
 export const Timer = ({ sendRequestAt, onTimerFinish }: Props) => {
   const { totalSeconds } = useTimer({
-    expiryTimestamp: sendRequestAt,
+    expiryTimestamp: new Date(sendRequestAt),
     autoStart: true,
     onExpire: onTimerFinish,
   });

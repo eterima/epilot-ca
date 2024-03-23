@@ -25,8 +25,10 @@ export class PlayerGuessService {
       const btcValueAfter = await this.btcApi.getCurrentValue();
 
       const isGuessCorrect =
-        btcValueAfter > createPlayerGuessDto.btcValue &&
-        createPlayerGuessDto.guess === Guess.UP;
+        (btcValueAfter > createPlayerGuessDto.btcValue &&
+          createPlayerGuessDto.guess === Guess.UP) ||
+        (btcValueAfter < createPlayerGuessDto.btcValue &&
+          createPlayerGuessDto.guess === Guess.DOWN);
 
       const score = isGuessCorrect ? 'increment_by_1' : 'decrement_by_1';
 

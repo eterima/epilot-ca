@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { playerService } from "../../services/player.service";
 import { InputWithValidation } from "../../components/InputWithValidation/InputWithValidation";
 import { AxiosError } from "axios";
+import { httpService } from "../../services/http.service";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -22,8 +23,14 @@ export const Login = () => {
     try {
       const { accessToken } = await playerService.loginPlayer(loginForm);
       localStorage.setItem("accessToken", accessToken);
-      //   TODO Add refresh token
-      navigate("/");
+
+      if (accessToken) {
+        httpService.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${accessToken}`;
+
+        navigate("/");
+      }
     } catch (error) {
       if (error instanceof AxiosError) {
         if (Array.isArray(error.response?.data.message)) {

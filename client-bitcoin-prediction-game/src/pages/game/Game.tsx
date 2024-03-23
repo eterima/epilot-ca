@@ -7,6 +7,8 @@ import { playerService } from "../../services/player.service";
 import { Timer } from "../../components/Timer/Timer";
 import { GuessDetails } from "../../types/player.type";
 import { guessService } from "../../services/guess.service";
+import { Guess } from "../../types/guess.type";
+import { GuessResult } from "../../components/GuessResult/GuessResult";
 
 const USDollar = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -16,27 +18,52 @@ const USDollar = new Intl.NumberFormat("en-US", {
 export const Game = () => {
   // TODO - create custom hook
   const [btcCurrentValue, setBTCCrrentValue] = useState<undefined | number>();
-  const [sendRequestAt, setSendRequestAt] = useState<Date>();
+  const [sendRequestAt, setSendRequestAt] = useState<Date>(
+    new Date(new Date().setSeconds(new Date().getSeconds() + 15000)),
+  );
   const [allTimeScore, setAllTimeScore] = useState<number>();
   const [isGameInProgress, setIsGameInProgress] = useState(false);
   const [displayTimer, setDisplayTimer] = useState(false);
   const [guessDetails, setGuessDetails] = useState<GuessDetails>();
+  const [guessResult, setGuessResult] = useState<Guess>();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const [btcPrice, player] = await Promise.all([
-        btcService.getCurrentBTCValue(),
-        playerService.getSelf(),
-      ]);
-      setBTCCrrentValue(btcPrice);
+    playerService.getSelf().then((player) => {
       setAllTimeScore(player.allTimeScore);
-    };
-    fetchData();
+      setIsGameInProgressOnInit();
+    });
   }, []);
+
+  const setIsGameInProgressOnInit = async () => {
+    const guessDetailsString = localStorage.getItem("guessDetails");
+    if (!guessDetailsString) {
+      return;
+    }
+    const guessDetails = JSON.parse(guessDetailsString) as GuessDetails;
+
+    const now = new Date();
+    const sendRequestAt = new Date(guessDetails.sendRequestAt);
+
+    if (sendRequestAt < now) {
+      await fetchData();
+      return;
+    }
+
+    setGuessDetails(guessDetails);
+    setBTCCrrentValue(guessDetails.btcCurrentValue);
+    setIsGameInProgress(true);
+    setDisplayTimer(true);
+    setSendRequestAt(guessDetails.sendRequestAt);
+  };
+
+  const fetchData = async () => {
+    const btcPrice = await btcService.getCurrentBTCValue();
+    setBTCCrrentValue(btcPrice);
+  };
 
   const scheduleSubmitGuess = (guess: number) => {
     const requestDate = new Date(
-      new Date().setSeconds(new Date().getSeconds() + 5),
+      new Date().setSeconds(new Date().getSeconds() + 15),
     );
     const guessDetails: GuessDetails = {
       guess,
@@ -51,7 +78,6 @@ export const Game = () => {
   };
 
   const submitGuess = async () => {
-    console.log("Submitting guess", guessDetails);
     if (!guessDetails?.btcCurrentValue) {
       // TODO - Handle this
       return;
@@ -60,12 +86,22 @@ export const Game = () => {
       btcValue: guessDetails.btcCurrentValue,
       guess: guessDetails.guess,
     });
-    console.log(response);
+
+    setAllTimeScore(
+      response.isWin ? Number(allTimeScore) + 1 : Number(allTimeScore) - 1,
+    );
+    setGuessResult(response);
   };
 
   const onTimerFinish = async () => {
     setDisplayTimer(false);
     await submitGuess();
+  };
+
+  const onStartNextRound = async () => {
+    setBTCCrrentValue(guessResult?.btcValueAfter);
+    setGuessResult(undefined);
+    setIsGameInProgress(false);
   };
 
   return (
@@ -76,7 +112,10 @@ export const Game = () => {
             <Col>
               <h5 className="text-success">Guess the price</h5>
               <Alert>
-                Current price is:{" "}
+                All time score is: <strong>{allTimeScore}</strong>
+              </Alert>
+              <Alert>
+                Current BTC price is:{" "}
                 <strong>
                   {btcCurrentValue && USDollar.format(btcCurrentValue)}
                 </strong>
@@ -116,15 +155,15 @@ export const Game = () => {
             </Col>
           </Row>
         </Col>
-        <Col sm={12} md={6}>
-          <Row>
-            <Col>
-              <h5 className="text-success">Stats</h5>
-              <Alert>
-                All time score: <strong>{allTimeScore}</strong>
-              </Alert>
-            </Col>
-          </Row>
+      </Row>
+      <Row>
+        <Col>
+          {guessResult && (
+            <GuessResult
+              onStartNextRound={onStartNextRound}
+              guessResult={guessResult}
+            />
+          )}
         </Col>
       </Row>
     </Container>
