@@ -63,7 +63,7 @@ export const Game = () => {
 
   const scheduleSubmitGuess = (guess: number) => {
     const requestDate = new Date(
-      new Date().setSeconds(new Date().getSeconds() + 15),
+      new Date().setSeconds(new Date().getSeconds() + 60),
     );
     const guessDetails: GuessDetails = {
       guess,
@@ -107,10 +107,18 @@ export const Game = () => {
   return (
     <Container className="game-container">
       <Row>
-        <Col sm={12} md={6}>
+        <Col>
           <Row>
-            <Col>
-              <h5 className="text-success">Guess the price</h5>
+            <Col className="mt-3">
+              <h5 className="text-primary">Guess BTC price</h5>
+              <hr />
+              <p>
+                Bitcoing game where you guess the next price. You can guess only
+                once in 60 seconds. <br />
+                If you win, you get 1 point. If you lose, you lose 1 point. You
+                can to lower than 0.
+              </p>
+              <hr />
               <Alert>
                 All time score is: <strong>{allTimeScore}</strong>
               </Alert>

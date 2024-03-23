@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Alert, Col, Container, Row } from "react-bootstrap";
 import { useTimer } from "react-timer-hook";
 
 type Props = {
@@ -15,14 +15,16 @@ export const Timer = ({ sendRequestAt, onTimerFinish }: Props) => {
   });
 
   return (
-    <Container>
-      <Row>
-        <Col>
-          <h3>
-            Results in: <strong>{totalSeconds} seconds</strong>
-          </h3>
-        </Col>
-      </Row>
-    </Container>
+    <Alert className="mt-3">
+      <Container>
+        <Row>
+          <Col>
+            <h6>
+              Results of guess in: <strong>{totalSeconds} seconds</strong>
+            </h6>
+          </Col>
+        </Row>
+      </Container>
+    </Alert>
   );
 };
