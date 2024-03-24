@@ -9,11 +9,7 @@ import { GuessDetails } from "../../types/player.type";
 import { guessService } from "../../services/guess.service";
 import { Guess } from "../../types/guess.type";
 import { GuessResult } from "../../components/GuessResult/GuessResult";
-
-const USDollar = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-});
+import { numberToUsd } from "../../utils/numberToUsd";
 
 export const Game = () => {
   // TODO - create custom hook
@@ -125,7 +121,7 @@ export const Game = () => {
               <Alert>
                 Current BTC price is:{" "}
                 <strong>
-                  {btcCurrentValue && USDollar.format(btcCurrentValue)}
+                  {btcCurrentValue && numberToUsd(btcCurrentValue)}
                 </strong>
               </Alert>
             </Col>

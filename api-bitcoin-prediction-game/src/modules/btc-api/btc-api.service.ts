@@ -10,7 +10,6 @@ export class BtcApiService {
   ) {}
 
   async getCurrentBTCValue() {
-    return 55000;
-    // return this.btcApi.getCurrentValue();
+    return this.btcApi.getCurrentValue();
   }
 }

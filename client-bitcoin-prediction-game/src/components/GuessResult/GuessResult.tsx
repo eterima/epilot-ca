@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Button, Alert } from "react-bootstrap";
 import { Guess } from "../../types/guess.type";
+import { numberToUsd } from "../../utils/numberToUsd";
 
 type Props = {
   guessResult: Guess;
@@ -31,14 +32,14 @@ export const GuessResult = ({ guessResult, onStartNextRound }: Props) => {
           <p>
             Guess based on BTC value:{" "}
             <span>
-              {guessResult.btcValue}
+              {numberToUsd(guessResult.btcValue)}
               <strong></strong>
             </span>
           </p>
           <p>
             BTC value after:{" "}
             <span>
-              {guessResult.btcValueAfter}
+              {numberToUsd(guessResult.btcValueAfter)}
               <strong></strong>
             </span>
           </p>
