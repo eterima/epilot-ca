@@ -7,7 +7,7 @@ import { PlayerGuessModel } from './player-guess.mongodb.schema';
 import { PlayerGuessRepository } from '../player-guess.repository';
 import { CreatePlayerGuessDTO } from '../dtos/create-player-guess.dto';
 import { PlayerGuess } from '../player-guess.interface';
-import { SOMETHING_WENT_WRONG } from 'src/errors/custom-errors-messages';
+import { SOMETHING_WENT_WRONG } from '../../../errors/custom-errors-messages';
 
 @Injectable()
 export class PlayerGuessMongoDBRepositoryImplementation

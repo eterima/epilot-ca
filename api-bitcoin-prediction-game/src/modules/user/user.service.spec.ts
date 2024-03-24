@@ -36,6 +36,7 @@ describe('UserService', () => {
       email: 'amce@gmail.com',
       id: '123',
       password: 'password',
+      allTimeScore: 1,
     };
     it('should throw User with email already exists error', async () => {
       jest.spyOn(userRepo, 'findUserByEmail').mockResolvedValueOnce(user);
@@ -53,6 +54,7 @@ describe('UserService', () => {
       jest.spyOn(userRepo, 'createUser').mockResolvedValueOnce({
         email: user.email,
         id: user.id,
+        allTimeScore: 1,
       });
 
       try {
