@@ -32,8 +32,6 @@ export class PlayerGuessService {
 
       const score = isGuessCorrect ? 'increment_by_1' : 'decrement_by_1';
 
-      console.log(score);
-
       // TODO - Improve this with DB transactions
       const [_, playerGuess] = await Promise.all([
         this.userService.updateAllTimeScore(
